@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { getFlowList } from '@/api/flow';
-
-
+import { useRouter } from 'vue-router';
+import WorkflowEditor from '@/views/WorkflowEditor.vue';
+import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs';
 const activeName = ref('workflows');
 const currentPage = ref(1);
 const pageSize = ref(10);
 const total = ref(0);
+const router = useRouter();
 
+const goToWorkflowEditor = () => {
+    console.log('1111111')
+  router.push({ name: 'WorkflowEditor' });
+};
 // 当分页器页码发生改变时，动态加载对应页的工作流列表
 const handlePageChange = (page: number) => {
     currentPage.value = page;
@@ -124,7 +130,7 @@ const workflows = ref([
                             <p style="font-size: 16px; color: #666666;">欢迎来到n8n, 这是一个基于Vue+Spring的流程管理平台</p>
                         </div>
                         <div>
-                            <el-button type="primary" style="background-color: #EA4B71; border: #EA4B71;">创建新流程</el-button>
+                            <el-button type="primary" style="background-color: #EA4B71; border: #EA4B71;" @click="goToWorkflowEditor">创建新流程</el-button>
                         </div>
                     </div>
 

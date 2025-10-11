@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import OverView from './components/overview/OverView.vue'
+import OverView from './views/OverView.vue'
+import WorkflowEditor from './views/WorkflowEditor.vue';
 </script>
 
 <template>
 
-  <main>
-    <OverView />
-  </main>
+   <router-view />
+ 
+ 
 </template>
 
 <style scoped>
