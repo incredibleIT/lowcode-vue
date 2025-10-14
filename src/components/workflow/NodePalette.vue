@@ -4,12 +4,17 @@
     <el-divider />
 
     <!-- 写了一个放置节点的节点库的右边栏 节点可以写在components的nodes目录下 -->
-    <!-- 这里只是几个示例 并没有实际功能 -->
+    <!-- 放了一个自定义脚本节点，没写其他节点 -->
     <div class="node-group">
-      <h4>触发器</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'schedule')">
-        <el-icon><Clock /></el-icon>
-        <span>定时触发器</span>
+      <h4>脚本节点</h4>
+      <div class="node-item" draggable="true"@dragstart="onDragStart($event, 'customScript')">
+        <span>自定义脚本节点</span>
+      </div>
+
+      <h4>http请求</h4>
+      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'httpRequest')">
+        
+        <span>http请求节点</span>
       </div>
     </div>
 
@@ -31,7 +36,7 @@
 
 <script setup lang="ts">
 import { Clock, Document, Postcard } from '@element-plus/icons-vue';
-
+// 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
   // 在拖拽开始时，将节点类型信息存入dataTransfer对象
   if (event && event.dataTransfer) {
