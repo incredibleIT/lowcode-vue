@@ -8,13 +8,15 @@
     <div class="node-group">
       <h4>脚本节点</h4>
       <div class="node-item" draggable="true"@dragstart="onDragStart($event, 'customScript')">
-        <span>自定义脚本节点</span>
+        <IconCustomScript class="node-icon"/>
+        <span class="node-label">自定义脚本</span>
       </div>
+
 
       <h4>http请求</h4>
       <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'httpRequest')">
-        
-        <span>http请求节点</span>
+        <IconHttpRequest class="node-icon"/>
+        <span>http请求</span>
       </div>
     </div>
 
@@ -35,7 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import { Clock, Document, Postcard } from '@element-plus/icons-vue';
+import { Document, Postcard } from '@element-plus/icons-vue';
+import IconCustomScript from '../icons/IconCustomScript.vue';
+import IconHttpRequest from '../icons/IconHttpRequest.vue';
+
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
   // 在拖拽开始时，将节点类型信息存入dataTransfer对象
@@ -79,6 +84,21 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+ /* .node-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  cursor: grab;
+  background-color: #f5f7fa;
+  transition: all 0.2s ease;
+  text-align: center;
+  min-height: 80px;
+  justify-content: center;
+} */
+
 .node-item:hover {
   border-color: #409eff;
   background-color: #ecf5ff;
@@ -101,4 +121,18 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
   font-size: 13px;
   color: #606266;
 }
+
+/* 网格布局用于排列图标节点[1](@ref) */
+.nodes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
 </style>
+
+
+
+
+
+
+

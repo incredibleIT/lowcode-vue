@@ -49,7 +49,7 @@
         </el-breadcrumb>
       </el-card>
       <!-- 主流程画布区域 -->
-      <!-- 这里添加了拖拽事件 -->
+      <!-- 添加了拖拽事件 -->
       <el-main class="canvas-area" @dragover="onDragOver" @drop="onDrop">
         <VueFlow :node-types="nodeTypes" fit-view-on-init class="vue-flow-container">
           <Background pattern-color="#aaa" gap="16" />
@@ -72,41 +72,22 @@ import "@vue-flow/core/dist/style.css";
 import { markRaw } from "vue"; // 降低响应式性能开销
 import { House, Document, Grid, DataLine, PieChart } from "@element-plus/icons-vue";
 import { useRoute, useRouter } from "vue-router"; // 导入使用路由
-import RightsideBar from "@/components/workflow/RightsideBar.vue";
+import RightsideBar from "@/components/workflow/RightSidebar.vue";
 import CustomScriptNode from "@/components/nodes/CustomScriptNodes.vue"; // 自定义脚本节点
 import HttpRequests from "@/components/nodes/HttpRequests.vue";
-// 获取当前的路由信息，读取URL传参
+// 获取当前的路由信息，读取URL传参 
 const route = useRoute();
 const router = useRouter();
 
+const nodeTypes = {
+    customScript : markRaw(CustomScriptNode),
+    httpRequest : markRaw(HttpRequests),
+};
+
 const currentWorkflowName = ref(""); // 初始值为空字符串
 
-// useVueFlow   使用几个示例节点
-const { addNodes, addEdges, onInit,project } = useVueFlow();
-onInit(() => {
-  addNodes([
-    {
-      id: "1",
-      type: "input",
-      label: "Schedule Trigger",
-      position: { x: 100, y: 100 },
-      class: "light",
-    },
-    {
-      id: "2",
-      type: "default",
-      label: "AI Agent",
-      position: { x: 400, y: 100 },
-      class: "light",
-    },
-  ]);
-  addEdges([{ id: "e1-2", source: "1", target: "2" }]);
-});
-
-const nodeTypes = {
-  customScript: markRaw(CustomScriptNode),
-  httpRequest : markRaw(HttpRequests),
-};
+// useVueFlow   
+const { addNodes, addEdges, project } = useVueFlow();
 
 // 处理拖拽事件 
 const onDragOver = (event:DragEvent) => {
@@ -115,7 +96,7 @@ const onDragOver = (event:DragEvent) => {
     event.dataTransfer.dropEffect = 'move';
   }
 }
-
+// 放置的逻辑
 const onDrop = async (event:DragEvent) => {
   event.preventDefault();
   const nodeType = event.dataTransfer?.getData('application/vueflow-node-type');
@@ -125,16 +106,15 @@ const onDrop = async (event:DragEvent) => {
     const position = { 
       x: event.clientX - rect.left, 
       y: event.clientY - rect.top 
-  };
-  const projectedPosition = project(position);
+    };
+    const projectedPosition = project(position);
     
-   const newNode = {
-      id: `${nodeType}-${Date.now()}`, // 确保ID唯一
-      type: nodeType, // 此类型必须与注册的 nodeTypes 键名匹配
+    const newNode = {
+      id: `${nodeType}-${Date.now()}`, 
+      type: nodeType, 
       position: projectedPosition,
-      data: { label: `${nodeType} Node` } // 节点的初始数据
+      data: { label: `${nodeType} Node` } 
     }
-    
     // 添加新节点到画布
     addNodes([newNode])
 
