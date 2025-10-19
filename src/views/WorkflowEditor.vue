@@ -75,6 +75,7 @@ import { useRoute, useRouter } from "vue-router"; // 导入使用路由
 import RightsideBar from "@/components/workflow/RightSidebar.vue";
 import CustomScriptNode from "@/components/nodes/CustomScriptNodes.vue"; // 自定义脚本节点
 import HttpRequests from "@/components/nodes/HttpRequests.vue";
+import IfConditionConfig from "@/components/nodes/IfConditionConfig.vue";
 // 获取当前的路由信息，读取URL传参 
 const route = useRoute();
 const router = useRouter();
@@ -82,6 +83,7 @@ const router = useRouter();
 const nodeTypes = {
     customScript : markRaw(CustomScriptNode),
     httpRequest : markRaw(HttpRequests),
+    IfConditionConfig :markRaw(IfConditionConfig)
 };
 
 const currentWorkflowName = ref(""); // 初始值为空字符串

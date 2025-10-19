@@ -35,6 +35,7 @@
         </div>
 
         <div class="config-section">
+          <div class="config-item">
           <label class="section-label">请求方法</label>
           <el-select v-model="localConfig.method" size="small" @change="updateNodeData">
             <el-option label="GET" value="GET" />
@@ -55,7 +56,7 @@
           />
         </div>
 
-        <div class="config-section">
+        <div class="config-item">
           <label class="section-label">请求头 (JSON格式)</label>
           <el-input
             v-model="localConfig.headers"
@@ -67,7 +68,7 @@
           />
         </div>
 
-        <div v-if="['POST', 'PUT', 'PATCH'].includes(localConfig.method)" class="config-section">
+        <div v-if="['POST', 'PUT', 'PATCH'].includes(localConfig.method)" class="config-item">
           <label class="section-label">请求体</label>
           <el-input
             v-model="localConfig.body"
@@ -78,8 +79,8 @@
             @blur="updateNodeData"
           />
         </div>
-
-        <div class="action-buttons">
+      </div>
+        <div class="action-group">
           <el-button type="primary" size="small" @click="executeRequest" :loading="isLoading">
             {{ isLoading ? '请求中...' : '测试请求' }}
           </el-button>
@@ -234,55 +235,131 @@ const saveTitle = () => {
 </script>
 
 <style scoped>
+/* 节点整体容器 */
 .vue-flow__node-httpRequest {
+  padding: 16px;
+  background: transparent;
+  /* border: 1px solid #e5e7eb; */
+  border-radius: 4px;
+  min-width: 280px;
+  font-size: 13px;
+  position: relative;
+  min-width: 80px;
+  min-height: 80px;
+}
+.edit-mode {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.icon-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 12px;
-  background: #fff;
+  cursor: pointer;
   border: 2px solid #4CAF50;
   border-radius: 8px;
-  min-width: 280px;
-  font-size: 12px;
-  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+  background: white;
+  transition: all 0.3s ease;
+  min-height: 100px;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
-.node-header {
-  font-weight: bold;
-  margin-bottom: 12px;
-  cursor: pointer;
+.icon-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+}
+.node-icon {
+  width: 40px;
+  height: 40px;
   color: #4CAF50;
 }
-
-.config-section {
-  margin-bottom: 10px;
+.node-title {
+  font-weight: 500;
+  color: #1f2937;
 }
 
-.config-section label {
+
+.edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.edit-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+.close-button {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.close-button:hover {
+  background-color: #f3f4f6;
+}
+
+
+.config-group {
+  margin-bottom: 16px;
+}
+.config-item {
+  margin-bottom: 12px;
+}
+.section-label {
   display: block;
-  font-size: 11px;
-  color: #666;
-  margin-bottom: 4px;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 5px;
   font-weight: 500;
 }
 
-.node-actions {
-  margin-top: 12px;
-  text-align: center;
+.el-input--small,
+.el-select--small {
+  width: 100%;
+}
+.el-textarea__inner {
+  font-size: 13px !important;
+}
+
+.action-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+.el-button--small {
+  padding: 4px 12px;
+  font-size: 13px;
 }
 
 .result-section {
-  margin-top: 12px;
+  margin-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 16px;
 }
-
 .response-info {
-  font-size: 11px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.5;
 }
-
-.response-info pre {
-  background: #f5f5f5;
+.response-pre {
+  background: #f9fafb;
   padding: 8px;
   border-radius: 4px;
   overflow-x: auto;
   margin-top: 6px;
-  font-size: 10px;
+  font-size: 12px;
+  border: 1px solid #e5e7eb;
 }
 </style>

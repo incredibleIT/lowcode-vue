@@ -32,9 +32,9 @@
         <button class="close-button" @click="exitEditMode">×</button>
       </div>
       
-      <div class="edit-content">
+      <div class="config-group">
         <!--可以编辑标题-->
-        <div class="config-section">
+        <div class="config-item">
           <label class="section-label">节点标题</label>
           <input
             v-model="localConfig.title"
@@ -66,7 +66,7 @@
           ></textarea>
         </div>
 
-        <div class="node-actions">
+        <div class="action-group">
           <button class="execute-button" @click="executeScript">执行脚本</button>
           <button class="done-button" @click="exitEditMode">完成</button>
         </div>
@@ -196,21 +196,26 @@ const updateNodeData = () => {
 </script>
 
 <style scoped>
+/* 节点整体容器 */
 .vue-flow__node-customScript {
+  padding: 16px;
+  background: transparent;
+  /* border: 1px solid #e5e7eb; */
+  border-radius: 4px;
+  min-width: 280px;
+  font-size: 13px;
   position: relative;
   min-width: 80px;
   min-height: 80px;
 }
-
-.node-handle {
-  opacity: 0.7;
-  transition: opacity 0.2s;
+.edit-mode {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
 }
 
-.vue-flow__node-customScript:hover .node-handle {
-  opacity: 1;
-}
-
+/* 非编辑态-图标区域 */
 .icon-display {
   display: flex;
   flex-direction: column;
@@ -225,157 +230,121 @@ const updateNodeData = () => {
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
-.icon-display:hover {
-  border-color: #2E7D32;
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
-  transform: scale(1.05);
-}
-
 .icon-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  flex-direction: column; 
 }
-
 .node-icon {
-  width: 40px;
-  height: 40px;
-  color: #4CAF50;
+  margin-right: 0; /* 去掉图标右侧原有的间距 */
+  color: #4b5563;
+  font-size: 24px; /* 增大图标尺寸，可根据需要调整 */
+  margin-bottom: 4px; /* 图标与文字间的间距 */
 }
-
 .node-title {
-  font-size: 12px;
-  color: #4CAF50;
-  font-weight: 600;
-  text-align: center;
-  max-width: 80px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-weight: 500;
+  color: #1f2937;
 }
 
-.edit-mode {
-  min-width: 280px;
-  border: 2px solid #409EFF;
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
 
 .edit-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: #409EFF;
-  color: white;
-  border-radius: 6px 6px 0 0;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
 }
-
 .edit-title {
-  font-weight: 600;
   font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
 }
-
 .close-button {
-  background: none;
+  background: transparent;
   border: none;
-  color: white;
-  font-size: 18px;
+  color: #6b7280;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
+  transition: background-color 0.2s;
 }
-
 .close-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background-color: #f3f4f6;
 }
 
-.edit-content {
-  padding: 16px;
-}
-
-.config-section {
+/* 配置项分组 */
+.config-group {
   margin-bottom: 16px;
 }
-
+.config-item {
+  margin-bottom: 12px;
+}
 .section-label {
   display: block;
   font-size: 12px;
-  color: #666;
-  margin-bottom: 6px;
+  color: #6b7280;
+  margin-bottom: 4px;
   font-weight: 500;
 }
-
-.title-input {
-  width: 100%;
-  padding: 6px 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
+/* 输入框/文本域 统一小尺寸 */
+.title-input,
 .config-textarea {
   width: 100%;
+  padding: 6px 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 6px 8px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+.config-textarea {
   font-family: monospace;
-  font-size: 12px;
   resize: vertical;
 }
 
-.node-actions {
+/* 按钮组 */
+.action-group {
   display: flex;
+  justify-content: flex-end;
   gap: 8px;
   margin-top: 16px;
-  margin-bottom: 8px;
 }
-
-.execute-button {
-  padding: 6px 12px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
+.execute-button,
 .done-button {
-  padding: 6px 12px;
-  background: #409EFF;
-  color: white;
+  padding: 4px 12px;
+  font-size: 13px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
+  color: #fff;
 }
-
+.execute-button {
+  background-color: #4CAF50;
+}
+.done-button {
+  background-color: #409EFF;
+}
 .execute-button:hover {
-  background: #45a049;
+  background-color: #45a049;
 }
-
 .done-button:hover {
-  background: #3385ff;
+  background-color: #3385ff;
 }
 
+/* 结果区域 */
 .result-section {
-  margin-top: 12px;
-  padding: 12px;
-  background: #f5f5f5;
-  border-radius: 4px;
-  font-size: 11px;
+  margin-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 16px;
 }
-
 .result-pre {
-  margin: 4px 0 0 0;
-  white-space: pre-wrap;
-  background: white;
+  background: #f9fafb;
   padding: 8px;
   border-radius: 4px;
   overflow-x: auto;
+  margin-top: 6px;
+  font-size: 12px;
+  border: 1px solid #e5e7eb;
+  white-space: pre-wrap;
 }
 </style>

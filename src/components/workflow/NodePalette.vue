@@ -18,6 +18,12 @@
         <IconHttpRequest class="node-icon"/>
         <span>http请求</span>
       </div>
+
+      <h4>条件if节点</h4>
+      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'IfConditionConfig')">
+        <IconConditions class="node-icon"/>
+        <span>条件if节点</span>
+      </div>
     </div>
 
     <el-divider />
@@ -40,6 +46,7 @@
 import { Document, Postcard } from '@element-plus/icons-vue';
 import IconCustomScript from '../icons/IconCustomScript.vue';
 import IconHttpRequest from '../icons/IconHttpRequest.vue';
+import IconConditions from '../icons/IconConditions.vue';
 
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
@@ -84,6 +91,10 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+.node-icon {
+  width: 20px;
+  height: 20px;
+}
  /* .node-item {
   display: flex;
   flex-direction: column;
