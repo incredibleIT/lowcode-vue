@@ -14,7 +14,7 @@ export const NodeTypeConfig = {
         iconComponent : markRaw(IconHttpRequest)
     },
     mysql : {
-        name : "MySQL",
+        name : "MySQLNode",
         iconComponent : markRaw(IconMySQL)
     },
 };

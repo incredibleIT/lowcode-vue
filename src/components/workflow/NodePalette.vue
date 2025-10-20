@@ -36,12 +36,12 @@
     <div class="node-group">
       <h4>数据库操作</h4>
       <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'pgsql')">
-        <el-icon><Postcard /></el-icon>
+        <IconPostgreSQL class="node-icon"/>
         <span>PostgreSQL</span>
       </div>
       <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'mysql')">
-        <el-icon><Document /></el-icon>
-        <span>MySQL</span>
+        <IconMySQL class="node-icon"/>
+        <span>MySQL查询</span>
       </div>
     </div>
   </div>
@@ -53,6 +53,8 @@ import IconCustomScript from '../icons/IconCustomScript.vue';
 import IconHttpRequest from '../icons/IconHttpRequest.vue';
 import IconConditions from '../icons/IconConditions.vue';
 import IconWebhook from '../icons/IconWebhook.vue';
+import IconMySQL from '../icons/IconMySQL.vue';
+import IconPostgreSQL from '../icons/IconPostgreSQL.vue';
 
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
