@@ -24,6 +24,11 @@
         <IconConditions class="node-icon"/>
         <span>条件if节点</span>
       </div>
+      <h4>Webhook节点</h4>
+      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'Webhook')">
+        <IconWebhook class="node-icon"/>
+        <span>Webhook节点</span>
+      </div>
     </div>
 
     <el-divider />
@@ -47,6 +52,7 @@ import { Document, Postcard } from '@element-plus/icons-vue';
 import IconCustomScript from '../icons/IconCustomScript.vue';
 import IconHttpRequest from '../icons/IconHttpRequest.vue';
 import IconConditions from '../icons/IconConditions.vue';
+import IconWebhook from '../icons/IconWebhook.vue';
 
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
