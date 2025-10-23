@@ -78,6 +78,7 @@ import HttpRequests from "@/components/nodes/HttpRequests.vue";
 import IfConditionConfig from "@/components/nodes/IfConditionConfig.vue";
 import Webhook from "@/components/nodes/Webhook.vue";
 import MySQLNode from "@/components/nodes/MySQLNode.vue";
+import FilterNode from "@/components/nodes/FilterNode.vue";
 // 获取当前的路由信息，读取URL传参 
 const route = useRoute();
 const router = useRouter();
@@ -86,8 +87,9 @@ const nodeTypes = {
     customScript : markRaw(CustomScriptNode),
     httpRequest : markRaw(HttpRequests),
     IfConditionConfig :markRaw(IfConditionConfig),
-    Webhook :markRaw(Webhook),
-    mysql : markRaw(MySQLNode)
+    Webhook : markRaw(Webhook),
+    mysql : markRaw(MySQLNode),
+    FilterNode : markRaw(FilterNode),
 };
 
 const currentWorkflowName = ref(""); // 初始值为空字符串

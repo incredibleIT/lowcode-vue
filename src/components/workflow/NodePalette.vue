@@ -7,7 +7,7 @@
     <!-- 放了一个自定义脚本节点，没写其他节点 -->
     <div class="node-group">
       <h4>脚本节点</h4>
-      <div class="node-item" draggable="true"@dragstart="onDragStart($event, 'customScript')">
+      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'customScript')">
         <IconCustomScript class="node-icon"/>
         <span class="node-label">自定义脚本</span>
       </div>
@@ -28,6 +28,11 @@
       <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'Webhook')">
         <IconWebhook class="node-icon"/>
         <span>Webhook节点</span>
+      </div>
+      <h4>Filter节点</h4>
+      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'FilterNode')">
+        <IconFilter class="node-icon"/>
+        <span>Filter节点</span>
       </div>
     </div>
 
@@ -55,7 +60,7 @@ import IconConditions from '../icons/IconConditions.vue';
 import IconWebhook from '../icons/IconWebhook.vue';
 import IconMySQL from '../icons/IconMySQL.vue';
 import IconPostgreSQL from '../icons/IconPostgreSQL.vue';
-
+import IconFilter from '../icons/IconFilter.vue';
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
   // 在拖拽开始时，将节点类型信息存入dataTransfer对象
