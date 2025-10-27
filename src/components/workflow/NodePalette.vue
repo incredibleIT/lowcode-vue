@@ -73,8 +73,10 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
 
 <style scoped>
 .node-palette {
+  max-height: calc(100vh - 60px);
   padding: 16px;
   height: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
   background-color: #ffffff;
   border-right: 1px solid #eaeaea;
