@@ -1,6 +1,5 @@
 <template>
   <div class="vue-flow__node-mysql">
-    <!-- 连接点 -->
     <Handle 
       id="target-top" 
       type="target" 
@@ -16,7 +15,6 @@
       class="node-handle"
     />
 
-    <!-- 显示图标 -->
     <div v-if="!isEditing" class="icon-display" @dblclick="enterEditMode">
       <div class="icon-container">
         <IconMySQL class="node-icon"/>
@@ -61,7 +59,6 @@
           </div>
         </div>
 
-        <!-- 查询配置 -->
         <div class="config-section">
           <label class="section-label">查询类型</label>
           <el-select v-model="localConfig.queryType" size="small" @change="onQueryTypeChange">

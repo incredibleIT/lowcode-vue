@@ -1,13 +1,11 @@
 <template>
   <div class="right-sidebar">
-    <!-- 使用 Element Plus 的 Tabs 组件组织右侧内容 -->
     <el-tabs 
       v-model="activeTab" 
       type="border-card" 
       stretch 
       class="sidebar-tabs"
     >
-      <!-- 节点库标签页 -->
       <el-tab-pane name="nodes">
         <template #label>
           <span class="tab-label">
@@ -52,12 +50,12 @@ import { ref } from 'vue';
 import { Grid, Setting, MagicStick } from '@element-plus/icons-vue';
 import NodePalette from './NodePalette.vue'; // 导入节点库
 
-const activeTab = ref('nodes'); // 默认激活节点库标签页
+const activeTab = ref('nodes'); 
 </script>
 
 <style scoped>
 .right-sidebar {
-  width: 280px; /* 与参考图比例协调的宽度 */
+  width: 280px;
   height: 100%;
   background: #fff;
   border-left: 1px solid #e4e7ed;

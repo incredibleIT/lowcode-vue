@@ -40,7 +40,7 @@
 
     <div class="node-group">
       <h4>数据库操作</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'pgsql')">
+      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'postgresql')">
         <IconPostgreSQL class="node-icon"/>
         <span>PostgreSQL</span>
       </div>

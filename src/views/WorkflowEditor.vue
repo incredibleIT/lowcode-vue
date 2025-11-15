@@ -48,8 +48,6 @@
           <el-breadcrumb-item v-if="currentWorkflowName">{{currentWorkflowName }}</el-breadcrumb-item>
         </el-breadcrumb>
       </el-card>
-      <!-- 主流程画布区域 -->
-      <!-- 添加了拖拽事件 -->
       <el-main class="canvas-area" @dragover="onDragOver" @drop="onDrop">
         <VueFlow :node-types="nodeTypes" fit-view-on-init class="vue-flow-container">
           <Background pattern-color="#aaa" gap="16" />
@@ -64,40 +62,40 @@
 
 <script setup lang="ts">
 import { nextTick, ref } from "vue";
-// 修改导入组件
-import { VueFlow, useVueFlow } from "@vue-flow/core"; //  核心组件
+import { VueFlow, useVueFlow, type NodeComponent, type NodeTypesObject } from "@vue-flow/core"; //  核心组件
 import { Background } from "@vue-flow/background"; // 背景组件
 import { Controls } from "@vue-flow/controls"; // 控制组件
 import "@vue-flow/core/dist/style.css";
-import { markRaw } from "vue"; // 降低响应式性能开销
+import { markRaw } from "vue";
 import { House, Document, Grid, DataLine, PieChart } from "@element-plus/icons-vue";
-import { useRoute, useRouter } from "vue-router"; // 导入使用路由
+import { useRoute, useRouter } from "vue-router"; 
 import RightsideBar from "@/components/workflow/RightSidebar.vue";
-import CustomScriptNode from "@/components/nodes/CustomScriptNodes.vue"; // 自定义脚本节点
+import CustomScriptNode from "@/components/nodes/CustomScriptNodes.vue"; 
 import HttpRequests from "@/components/nodes/HttpRequests.vue";
 import IfConditionConfig from "@/components/nodes/IfConditionConfig.vue";
 import Webhook from "@/components/nodes/Webhook.vue";
 import MySQLNode from "@/components/nodes/MySQLNode.vue";
 import FilterNode from "@/components/nodes/FilterNode.vue";
-// 获取当前的路由信息，读取URL传参 
+import PostgreSQLNode from "@/components/nodes/PostgreSQLNode.vue";
 const route = useRoute();
 const router = useRouter();
 
-const nodeTypes = {
-    customScript : markRaw(CustomScriptNode),
-    httpRequest : markRaw(HttpRequests),
-    IfConditionConfig :markRaw(IfConditionConfig),
-    Webhook : markRaw(Webhook),
-    mysql : markRaw(MySQLNode),
-    FilterNode : markRaw(FilterNode),
+const nodeTypes: NodeTypesObject = {
+    customScript : markRaw(CustomScriptNode) as NodeComponent,
+    httpRequest : markRaw(HttpRequests) as NodeComponent,
+    IfConditionConfig : markRaw(IfConditionConfig) as NodeComponent,
+    Webhook : markRaw(Webhook) as NodeComponent,
+    mysql : markRaw(MySQLNode) as NodeComponent,
+    FilterNode : markRaw(FilterNode) as NodeComponent,
+    postgresql : markRaw(PostgreSQLNode) as NodeComponent,
 };
 
-const currentWorkflowName = ref(""); // 初始值为空字符串
+const currentWorkflowName = ref(""); 
 
-// useVueFlow   
+ 
 const { addNodes, addEdges, project } = useVueFlow();
 
-// 处理拖拽事件 
+
 const onDragOver = (event:DragEvent) => {
   event.preventDefault();
   if(event.dataTransfer){
@@ -150,30 +148,30 @@ const onDrop = async (event:DragEvent) => {
 
 .sidebar-footer {
   position: absolute;
-  bottom: 24px; /* 距离底部的距离 */
+  bottom: 24px; 
   padding: 0 16px;
-  box-sizing: border-box; /* 确保宽度包含内边距 */
+  box-sizing: border-box; 
   display: flex;
-  flex-direction: column; /* 纵列显示 */
-  gap: 8px; /* 按钮间距 */
+  flex-direction: column; 
+  gap: 8px; 
 }
 
 .sidebar-footer .el-button {
-  color: #666666; /* 按钮文字颜色 */
-  padding: 6px 12px; /* 调整内边距 */
+  color: #666666;
+  padding: 6px 12px; 
 }
 
 .sidebar-footer .el-button:hover {
-  color: #4096ff; /* hover 时文字颜色变化 */
+  color: #4096ff; 
 }
 .el-menu-item {
-  color: #333333; /* 菜单项文字颜色 */
-  padding: 12px 16px; /* 调整内边距 */
+  color: #333333; 
+  padding: 12px 16px;
 }
 
 .el-menu-item.is-active {
-  color: #4096ff; /* 激活菜单项文字颜色 */
-  background-color: #e6f7ff; /* 激活菜单项背景色 */
+  color: #4096ff; 
+  background-color: #e6f7ff;
 }
 /* 主要区域 保证画布占据所有屏幕 */
 .main-content {
@@ -182,7 +180,7 @@ const onDrop = async (event:DragEvent) => {
   flex-direction: column;
 }
 
-/* 新增：顶部导航栏样式 */
+/* 顶部导航栏样式 */
 .nav-bar {
   margin: 0;
   border-radius: 0;
@@ -208,7 +206,7 @@ const onDrop = async (event:DragEvent) => {
 
 .execute-btn {
   position: absolute;
-  bottom: 24px; /* 调整底部间距 */
+  bottom: 24px; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -218,6 +216,6 @@ const onDrop = async (event:DragEvent) => {
 }
 
 .execute-btn:hover {
-  background-color: #e53935; /*  hover 时加深颜色 */
+  background-color: #e53935;
 }
 </style>

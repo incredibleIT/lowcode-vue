@@ -17,6 +17,10 @@ export const NodeTypeConfig = {
         name : "MySQLNode",
         iconComponent : markRaw(IconMySQL)
     },
+    postgresql : {
+        name : "PostgreSQLNode",
+        iconComponent : markRaw(IconPostgreSQL)
+    }
 };
 
 export const getConfig = (nodeType : string) => {
