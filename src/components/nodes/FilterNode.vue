@@ -171,14 +171,13 @@
   import { Handle, Position, useVueFlow } from "@vue-flow/core";
   import { ElMessage } from "element-plus";
   import IconFilter from "../icons/IconFilter.vue";
-  // 定义过滤条件类型
+
   interface FilterCondition {
     field: string;
     operator: 'eq' | 'ne' | 'gt' | 'lt' | 'gte' | 'lte' | 'includes' | 'notIncludes' | 'exists' | 'notExists';
     value: string;
   }
   
-  // 定义过滤器节点配置类型
   interface FilterConfig {
     title: string;
     filterMode: 'keep' | 'exclude'; // 保留或排除符合条件的条目
@@ -202,7 +201,6 @@
   
   const { updateNode, updateNodeInternals } = useVueFlow();
   
-  // 默认配置
   const getDefaultFilterConfig = (): FilterConfig => ({
     title: "过滤器",
     filterMode: "keep",
@@ -223,7 +221,6 @@
   const isEditing = ref(false);
   const isTesting = ref(false);
   
-  // 格式化测试结果
   const formattedTestResult = computed(() => {
     if (!localConfig.value.testResult || !localConfig.value.sampleData) return '';
     try {
@@ -233,18 +230,14 @@
     }
   });
   
-  // 进入编辑模式
   const enterEditMode = () => {
     isEditing.value = true;
   };
-  
-  // 退出编辑模式
   const exitEditMode = () => {
     isEditing.value = false;
     updateNodeData();
   };
   
-  // 添加过滤条件
   const addCondition = () => {
     localConfig.value.conditions.push({
       field: "",
@@ -377,7 +370,6 @@
     });
   };
   
-  // 更新节点数据到画布
   const updateNodeData = () => {
     updateNode(props.id, { data: { ...localConfig.value } });
     nextTick(() => {
@@ -387,10 +379,9 @@
   </script>
   
   <style scoped>
-/* 过滤器节点基础样式 */
 .vue-flow__node-filter {
   position: relative;
-  min-width: 100px; /* 略宽于原样式，匹配示例比例 */
+  min-width: 100px; 
   min-height: 80px;
 }
 
@@ -422,7 +413,7 @@
   transition: all 0.3s ease;
   min-height: 100px;
   justify-content: center;
-  box-shadow: 0 1px 3px rgba(33, 181, 115, 0.1); /* 轻微阴影 */
+  box-shadow: 0 1px 3px rgba(33, 181, 115, 0.1); 
 }
 
 .icon-display:hover {
@@ -445,7 +436,7 @@
 
 .node-title {
   font-size: 12px;
-  color: #333; /* 标题深灰 */
+  color: #333;
   font-weight: 500;
   text-align: center;
   max-width: 90px;
@@ -455,11 +446,11 @@
 }
 
 .edit-mode {
-  min-width: 400px; /* 适中宽度 */
-  border: 1px solid #e5e7eb; /* 浅灰边框 */
+  min-width: 400px; 
+  border: 1px solid #e5e7eb; 
   border-radius: 6px;
   background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 柔和阴影 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
 }
 
 .edit-header {
@@ -467,8 +458,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px;
-  background: #f8fafc; /* 浅灰背景 */
-  color: #333; /* 标题深色 */
+  background: #f8fafc; 
+  color: #333; 
   border-radius: 6px 6px 0 0;
   border-bottom: 1px solid #e5e7eb;
 }
@@ -495,7 +486,7 @@
 
 .edit-content {
   padding: 16px;
-  max-height: 450px; /* 降低最大高度 */
+  max-height: 450px; 
   overflow-y: auto;
 }
 
@@ -525,6 +516,19 @@
   border: 1px solid #e5e7eb;
 }
 
+.condition-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.2s ease; 
+}
+
+.condition-item:hover {
+  border-color: #a7f3d0;
+}
+
 .condition-row {
   display: flex;
   gap: 10px;
@@ -534,12 +538,17 @@
 .condition-field,
 .condition-operator,
 .condition-value {
-  flex: 1; /* 平均分配宽度 */
+  flex: 1;
+}
+.condition-remove {
+  color: #ef4444;
+  padding: 0 4px;
+  transition: color 0.2s ease; 
 }
 
-.condition-remove {
-  color: #ef4444; /* 红色删除按钮 */
-  padding: 0 4px;
+
+.condition-remove:hover {
+  color: #dc2626;
 }
 
 .advanced-config {
@@ -547,15 +556,12 @@
 }
 
 .action-buttons {
-    display: flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
   gap: 100px;
   margin-top: 16px;
-  
 }
 
-
-/* 测试结果区域 */
 .result-section {
   margin-top: 16px;
   border-top: 1px solid #e5e7eb;
@@ -578,11 +584,26 @@
   word-break: break-all;
   max-height: 150px;
   overflow-y: auto;
-  border: 10px solid #e5e7eb;
+  border: 1px solid #e5e7eb; /* 修复原样式中10px边框的错误 */
 }
 
 .error-message {
   color: #ef4444;
   font-size: 12px;
 }
-  </style>
+
+/* Element组件样式适配 */
+.el-input--small,
+.el-select--small {
+  width: 100%;
+}
+
+.el-textarea__inner {
+  font-size: 13px !important;
+}
+
+.el-button--small {
+  padding: 4px 12px;
+  font-size: 13px;
+}
+</style>

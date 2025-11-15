@@ -49,7 +49,16 @@
         </el-breadcrumb>
       </el-card>
       <el-main class="canvas-area" @dragover="onDragOver" @drop="onDrop">
-        <VueFlow :node-types="nodeTypes" fit-view-on-init class="vue-flow-container">
+        <VueFlow
+        :node="nodes"
+        :edges="edges" 
+        :node-types="nodeTypes" 
+        fit-view-on-init
+        class="vue-flow-container"
+        @connect="handleConnect"
+        @nodes-change="onNodesChange"
+        @edges-change="onEdgesChange"
+        >
           <Background pattern-color="#aaa" gap="16" />
           <Controls />
         </VueFlow>
@@ -62,7 +71,7 @@
 
 <script setup lang="ts">
 import { nextTick, ref } from "vue";
-import { VueFlow, useVueFlow, type NodeComponent, type NodeTypesObject } from "@vue-flow/core"; //  核心组件
+import { VueFlow, useVueFlow, type NodeComponent, type NodeTypesObject, type Node, type Edge, type Connection} from "@vue-flow/core"; //  核心组件
 import { Background } from "@vue-flow/background"; // 背景组件
 import { Controls } from "@vue-flow/controls"; // 控制组件
 import "@vue-flow/core/dist/style.css";
@@ -80,6 +89,9 @@ import PostgreSQLNode from "@/components/nodes/PostgreSQLNode.vue";
 const route = useRoute();
 const router = useRouter();
 
+const nodes = ref<Node[]>([])
+const edges = ref<Edge[]>([])
+
 const nodeTypes: NodeTypesObject = {
     customScript : markRaw(CustomScriptNode) as NodeComponent,
     httpRequest : markRaw(HttpRequests) as NodeComponent,
@@ -92,8 +104,25 @@ const nodeTypes: NodeTypesObject = {
 
 const currentWorkflowName = ref(""); 
 
- 
+const isExecuting = ref(false);
+const executionResult = ref(null);
 const { addNodes, addEdges, project } = useVueFlow();
+
+const handleConnect = (connection : Connection) =>{
+  if(connection.source === connection.target){
+    return;
+  }
+   const newEdge: Edge = {
+    id: `${connection.source}-${connection.target}-${Date.now()}`,
+    source: connection.source!,
+    target: connection.target!,
+    sourceHandle: connection.sourceHandle,
+    targetHandle: connection.targetHandle,
+    type: 'smoothstep',
+    style: { stroke: '#555', strokeWidth: 2 }
+  };
+  addEdges([newEdge]);
+};
 
 
 const onDragOver = (event:DragEvent) => {
@@ -120,13 +149,13 @@ const onDrop = async (event:DragEvent) => {
       type: nodeType, 
       position: projectedPosition,
       data: { label: `${nodeType} Node` } 
-    }
-    // 添加新节点到画布
-    addNodes([newNode])
-
-    await nextTick()
+    };
+    addNodes([newNode]);
+    await nextTick();
   }
 };
+
+
 </script>
 
 <style scoped>

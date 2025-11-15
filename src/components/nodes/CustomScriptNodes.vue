@@ -198,7 +198,7 @@ const updateNodeData = () => {
 <style scoped>
 /* 节点整体容器 */
 .vue-flow__node-customScript {
-  padding: 16px;
+  padding: 4px;
   background: transparent;
   /* border: 1px solid #e5e7eb; */
   border-radius: 4px;
@@ -209,20 +209,20 @@ const updateNodeData = () => {
   min-height: 80px;
 }
 .edit-mode {
-  background: white;
+  background: rgb(246, 245, 245);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px;
+ border: 2px solid #6b7280;
 }
 
-/* 非编辑态-图标区域 */
 .icon-display {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px;
   cursor: pointer;
-  border: 2px solid #4CAF50;
+  border: 2px solid #6b7280;
   border-radius: 8px;
   background: white;
   transition: all 0.3s ease;
@@ -230,16 +230,21 @@ const updateNodeData = () => {
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+.icon-display:hover{
+   border-color: #4b5563;
+}
+
 .icon-container {
   display: flex;
   align-items: center;
   flex-direction: column; 
 }
 .node-icon {
-  margin-right: 0; /* 去掉图标右侧原有的间距 */
+  margin-right: 0;
   color: #4b5563;
-  font-size: 24px; /* 增大图标尺寸，可根据需要调整 */
-  margin-bottom: 4px; /* 图标与文字间的间距 */
+  font-size: 24px; 
+  margin-bottom: 4px; 
 }
 .node-title {
   font-weight: 500;
@@ -270,7 +275,7 @@ const updateNodeData = () => {
   transition: background-color 0.2s;
 }
 .close-button:hover {
-  background-color: #f3f4f6;
+  background-color: #5f6164;
 }
 
 /* 配置项分组 */
@@ -319,7 +324,7 @@ const updateNodeData = () => {
   color: #fff;
 }
 .execute-button {
-  background-color: #4CAF50;
+  background-color: #306933;
 }
 .done-button {
   background-color: #409EFF;
@@ -347,4 +352,20 @@ const updateNodeData = () => {
   border: 1px solid #e5e7eb;
   white-space: pre-wrap;
 }
+
+.node-handle {
+  width: 12px !important;
+  height: 12px !important;
+  background-color: #8d949e; 
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+.node-handle:hover {
+  background-color: #6b7280; 
+  transform: scale(1.2);
+}
+
 </style>

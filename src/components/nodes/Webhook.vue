@@ -5,10 +5,9 @@
         type="target" 
         :position="Position.Top" 
         :connectable="true"
-        class="custom-handle"
+        class="node-handle"
       />
       
-      <!-- 未编辑时的节点显示 -->
       <div v-if="!isEditing" class="icon-display" @dblclick="enterEditMode">
         <div class="icon-container">
           <IconWebhook class="node-icon"/>
@@ -16,7 +15,6 @@
         </div>
       </div>
   
-      <!-- 编辑模式 -->
       <div v-else class="edit-mode">
         <div class="edit-header">
           <span class="edit-title">配置Webhook节点</span>
@@ -61,7 +59,6 @@
             </el-select>
           </div>
   
-          <!-- Path 配置 -->
           <div class="config-section">
             <label class="section-label">Path</label>
             <el-input 
@@ -111,7 +108,6 @@
             </div>
           </div>
   
-          <!-- Respond 配置 -->
           <div class="config-section">
             <label class="section-label">Respond</label>
             <el-input
@@ -151,7 +147,7 @@
         type="source" 
         :position="Position.Bottom" 
         :connectable="true"
-        class="custom-handle"
+        class="node-handle"
       />
     </div>
   </template>
@@ -186,7 +182,7 @@
   
   const { updateNode } = useVueFlow()
   
-  // 计算属性，处理props数据
+  // 计算属性
   const localConfig = computed<WebhookConfig>(() => ({
     title: props.data?.title || 'Webhook',
     url: props.data?.url || '',
@@ -213,12 +209,10 @@
     return String(res.data)
   })
   
-  // 双击进入编辑模式
   const enterEditMode = () => {
     isEditing.value = true;
   };
   
-  // 退出编辑模式
   const exitEditMode = () => {
     isEditing.value = false;
     updateNodeData();
@@ -245,7 +239,6 @@
         method: localConfig.value.method,
         url: localConfig.value.url + (localConfig.value.path ? `/${localConfig.value.path}` : '')
       }
-      // 处理认证
       if (localConfig.value.authentication === 'Basic Auth') {
         config.auth = {
           username: localConfig.value.username,
@@ -266,7 +259,6 @@
       }
       // 发送请求
       const response = await axios(config)
-      // 更新节点状态
       localConfig.value.response = {
         status: response.status,
         statusText: response.statusText,
@@ -291,16 +283,14 @@
     }
   }
   
-  // 更新节点数据
   const updateNodeData = () => {
     updateNode(props.id, { data: { ...localConfig.value } })
   }
   </script>
   
   <style scoped>
-  /* 节点整体容器 */
   .vue-flow__node-webhook {
-    padding: 16px;
+    padding: 4px;
     background: transparent;
     border-radius: 4px;
     min-width: 280px;
@@ -311,9 +301,11 @@
   }
   .edit-mode {
     background: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15); 
     border-radius: 8px;
+    border: 2px solid #3B82F6;
     padding: 20px;
+    transition: border-color 0.3s ease;
   }
   
   .icon-display {
@@ -322,13 +314,20 @@
     align-items: center;
     padding: 12px;
     cursor: pointer;
-    border: 2px solid #4CAF50;
+    border: 2px solid #3B82F6;
     border-radius: 8px;
     background: white;
     transition: all 0.3s ease;
     min-height: 100px;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .icon-display:hover {
+    border-color: #2563EB; 
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); 
+    transform: translateY(-2px);
+    transition: all 0.3s ease; 
   }
   .icon-container {
     display: flex;
@@ -338,7 +337,7 @@
   .node-icon {
     width: 40px;
     height: 40px;
-    color: #4CAF50;
+    color: #3B82F6;
   }
   .node-title {
     font-weight: 500;
@@ -436,4 +435,19 @@
     flex-direction: column;
     gap: 8px;
   }
+
+.node-handle {
+  width: 12px !important;
+  height: 12px !important;
+  background-color: #69a9ee;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+.node-handle:hover {
+  background-color: #60A5FA; 
+}
+
   </style>

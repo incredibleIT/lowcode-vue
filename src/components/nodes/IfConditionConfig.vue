@@ -24,8 +24,7 @@
           <span class="node-title">{{ localConfig.title || '条件判断' }}</span>
         </div>
       </div>
-  
-      <!-- 编辑态：配置条件逻辑 -->
+
       <div v-else class="edit-mode">
         <div class="edit-header">
           <span class="edit-title">配置条件判断节点</span>
@@ -83,6 +82,8 @@
       </div>
     </div>
   </template>
+
+
   <script setup lang="ts">
   import { ref, computed } from "vue";
   import { Handle, Position, useVueFlow } from "@vue-flow/core";
@@ -195,10 +196,11 @@
     updateNode(props.id, { data: { ...localConfig.value } });
   };
   </script>
+
+
   <style scoped>
-  /* 节点整体容器 */
-  .vue-flow__node-customScript {
-    padding: 16px;
+  .vue-flow__node-ifCondition {
+    padding: 4px;
     background: transparent;
     /* border: 1px solid #e5e7eb; */
     border-radius: 4px;
@@ -215,21 +217,28 @@
     padding: 20px;
   }
   
-  /* 非编辑态-图标区域 */
   .icon-display {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 12px;
     cursor: pointer;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
+    border: 2px solid #F97316;
     background: white;
+    border-radius: 8px;
     transition: all 0.3s ease;
     min-height: 100px;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
+
+  .icon-display:hover{
+    border-color: #EA580C;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2); 
+    transform: translateY(-2px);
+    transition: all 0.3s ease;   
+  }
+
   .icon-container {
     display: flex;
     align-items: center;
@@ -238,7 +247,7 @@
   .node-icon {
     width: 40px;
     height: 40px;
-    color: #4CAF50;
+    color: #F97316;
   }
   .node-title {
     font-weight: 500;
@@ -272,7 +281,6 @@
     background-color: #f3f4f6;
   }
   
-  /* 配置项分组 */
   .config-group {
     margin-bottom: 16px;
   }
@@ -286,7 +294,7 @@
     margin-bottom: 4px;
     font-weight: 500;
   }
-  /* 输入框/文本域 统一小尺寸 */
+
   .title-input,
   .config-textarea {
     width: 100%;
@@ -301,7 +309,6 @@
     resize: vertical;
   }
   
-  /* 按钮组 */
   .action-group {
     display: flex;
     justify-content: flex-end;
@@ -318,19 +325,18 @@
     color: #fff;
   }
   .execute-button {
-    background-color: #4CAF50;
-  }
-  .done-button {
-    background-color: #409EFF;
+    background-color: #F97316;
   }
   .execute-button:hover {
-    background-color: #45a049;
+    background-color: #EA580C; /* 加深橙色 */
+  }
+  .done-button {
+    background-color: #FB923C; /* 浅橙色按钮 */
   }
   .done-button:hover {
-    background-color: #3385ff;
+    background-color: #F97316; /* 主色 hover */
   }
-  
-  /* 结果区域 */
+    
   .result-section {
     margin-top: 16px;
     border-top: 1px solid #e5e7eb;
@@ -345,5 +351,19 @@
     font-size: 12px;
     border: 1px solid #e5e7eb;
     white-space: pre-wrap;
+  }
+
+  .node-handle{
+    width: 12px !important;
+    height: 12px !important;
+    background-color: #FDBA74; /* 浅橙色句柄 */
+    border: 2px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+  .node-handle:hover{
+    background-color: #FB923C;
   }
   </style>
