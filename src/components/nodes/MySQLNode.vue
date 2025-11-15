@@ -161,7 +161,7 @@
 import { ref, computed, nextTick } from "vue";
 import { Handle, Position, useVueFlow } from "@vue-flow/core";
 import { ElMessage } from "element-plus";
-
+import IconMySQL from "../icons/IconMySQL.vue"
 // 定义MySQL节点配置数据类型
 interface MySQLConfig {
   title: string;
@@ -192,7 +192,6 @@ const props = defineProps<{
 
 const { updateNode, updateNodeInternals } = useVueFlow();
 
-// 首先完善MySQLConfig接口定义
 interface MySQLConfig {
   title: string;
   connectionType: 'default' | 'custom';
@@ -215,7 +214,6 @@ interface MySQLConfig {
   };
 }
 
-// 默认配置
 const getDefaultMySQLConfig = (): MySQLConfig => ({
   title: "MySQL查询",
   connectionType: "default",
@@ -367,10 +365,10 @@ const simulateMySQLQuery = async (testData: any): Promise<any> => {
   });
 };
 
-// 更新节点数据到画布
+
+
 const updateNodeData = () => {
   updateNode(props.id, { data: { ...localConfig.value } });
-  // 确保连接点状态同步更新
   nextTick(() => {
     updateNodeInternals([props.id]);
   });
@@ -384,7 +382,6 @@ const updateNodeData = () => {
   min-height: 80px;
 }
 
-/* 连接点样式 */
 .node-handle {
   width: 12px;
   height: 12px;
@@ -401,7 +398,6 @@ const updateNodeData = () => {
   background-color: #0096B7;
 }
 
-/* 图标显示模式 */
 .icon-display {
   display: flex;
   flex-direction: column;
@@ -447,7 +443,6 @@ const updateNodeData = () => {
   white-space: nowrap;
 }
 
-/* 编辑模式 */
 .edit-mode {
   min-width: 320px;
   border: 2px solid #00758F;
