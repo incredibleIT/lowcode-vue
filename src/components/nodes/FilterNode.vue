@@ -8,13 +8,6 @@
         :connectable="true" 
         class="node-handle"
       />
-      <Handle 
-        id="source-bottom" 
-        type="source" 
-        :position="Position.Bottom" 
-        :connectable="true" 
-        class="node-handle"
-      />
   
       <!-- 显示图标 -->
       <div v-if="!isEditing" class="icon-display" @dblclick="enterEditMode">
@@ -164,6 +157,14 @@
         </div>
       </div>
     </div>
+
+      <Handle 
+        id="source-bottom" 
+        type="source" 
+        :position="Position.Bottom" 
+        :connectable="true" 
+        class="node-handle"
+      />
   </template>
   
   <script setup lang="ts">
@@ -381,14 +382,14 @@
   <style scoped>
 .vue-flow__node-filter {
   padding: 4px;
-    background: transparent;
-    /* border: 1px solid #e5e7eb; */
-    border-radius: 4px;
-    min-width: 80px;
-    width: auto;
-    font-size: 13px;
-    position: relative;
-    min-height: 80px;
+  background: transparent;
+  /* border: 1px solid #e5e7eb; */
+  border-radius: 4px;
+  min-width: 80px;
+  width: auto;
+  font-size: 13px;
+  position: relative;
+  min-height: 80px;
 }
 
 .node-handle {
@@ -405,6 +406,7 @@
 .node-handle:hover {
   transform: scale(1.2);
   background-color: #096dd9; 
+
 }
 
 .icon-display {
@@ -491,10 +493,13 @@
   color: #333;
 }
 
+.edit-content-scroll {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
 .edit-content {
   padding: 16px;
-  max-height: 450px; 
-  overflow-y: auto;
 }
 
 .config-section {

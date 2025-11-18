@@ -30,7 +30,7 @@
         <span>Webhook节点</span>
       </div>
       <h4>Filter节点</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'FilterNode')">
+      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'filter')">
         <IconFilter class="node-icon"/>
         <span>Filter节点</span>
       </div>
