@@ -380,6 +380,7 @@
   
   <style scoped>
 .vue-flow__node-filter {
+<<<<<<< HEAD
   padding: 4px;
     background: transparent;
     /* border: 1px solid #e5e7eb; */
@@ -389,22 +390,38 @@
     font-size: 13px;
     position: relative;
     min-height: 80px;
+=======
+  position: relative;
+  min-width: 100px; 
+  min-height: 80px;
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
 }
 
 .node-handle {
   width: 10px;
   height: 10px;
+<<<<<<< HEAD
   background-color:  #13c2c2; 
   border: 2px solid white;
   border-radius: 50%;
   box-shadow: 0 0 0 1px rgba(19, 194, 194, 0.5); 
+=======
+  background-color:  #4CAF50; 
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(33, 181, 115, 0.5); 
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
   z-index: 1000;
   transition: all 0.2s ease;
 }
 
 .node-handle:hover {
   transform: scale(1.2);
+<<<<<<< HEAD
   background-color: #096dd9; 
+=======
+  background-color: #1aa366; 
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
 }
 
 .icon-display {
@@ -413,12 +430,17 @@
   align-items: center;
   padding: 10px;
   cursor: pointer;
+<<<<<<< HEAD
   border: 2px solid  #13c2c2;
+=======
+  border: 2px solid  #4CAF50;
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
   border-radius: 6px; 
   background: white;
   transition: all 0.3s ease;
   min-height: 100px;
   justify-content: center;
+<<<<<<< HEAD
   box-shadow: 0 1px 3px rgba(19, 194, 194, 0.1); 
   width: auto;
 }
@@ -426,6 +448,14 @@
 .icon-display:hover {
   border-color: #096dd9;
   box-shadow: 0 2px 8px rgba(19, 194, 194, 0.2);
+=======
+  box-shadow: 0 1px 3px rgba(33, 181, 115, 0.1); 
+}
+
+.icon-display:hover {
+  border-color: #1aa366;
+  box-shadow: 0 2px 8px rgba(33, 181, 115, 0.2);
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
   transform: translateY(-1px);
 }
 
@@ -446,7 +476,11 @@
   color: #333;
   font-weight: 500;
   text-align: center;
+<<<<<<< HEAD
   max-width: 150px;
+=======
+  max-width: 90px;
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

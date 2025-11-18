@@ -534,7 +534,11 @@ onMounted(() => {
   color: #336791;
   font-weight: 600;
   text-align: center;
+<<<<<<< HEAD
   max-width: 150px;
+=======
+  max-width: 80px;
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

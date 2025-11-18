@@ -86,8 +86,11 @@ import Webhook from "@/components/nodes/Webhook.vue";
 import MySQLNode from "@/components/nodes/MySQLNode.vue";
 import FilterNode from "@/components/nodes/FilterNode.vue";
 import PostgreSQLNode from "@/components/nodes/PostgreSQLNode.vue";
+<<<<<<< HEAD
 import SplitterNode from "@/components/nodes/SplitterNode.vue";
 import CombinerNode from "@/components/nodes/CombinerNode.vue";
+=======
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
 const route = useRoute();
 const router = useRouter();
 
@@ -102,8 +105,11 @@ const nodeTypes: NodeTypesObject = {
     mysql : markRaw(MySQLNode) as NodeComponent,
     FilterNode : markRaw(FilterNode) as NodeComponent,
     postgresql : markRaw(PostgreSQLNode) as NodeComponent,
+<<<<<<< HEAD
     splitter : markRaw(SplitterNode) as NodeComponent,
     combiner : markRaw(CombinerNode) as NodeComponent,
+=======
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
 };
 
 const currentWorkflowName = ref(""); 

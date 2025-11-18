@@ -34,6 +34,7 @@
         <IconFilter class="node-icon"/>
         <span>Filter节点</span>
       </div>
+<<<<<<< HEAD
       
       <h4>数据处理</h4>
       <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'splitter')">
@@ -44,6 +45,8 @@
         <IconCombiner class="node-icon"/>
         <span>合并器</span>
       </div>
+=======
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
     </div>
 
     <el-divider />
@@ -71,8 +74,11 @@ import IconWebhook from '../icons/IconWebhook.vue';
 import IconMySQL from '../icons/IconMySQL.vue';
 import IconPostgreSQL from '../icons/IconPostgreSQL.vue';
 import IconFilter from '../icons/IconFilter.vue';
+<<<<<<< HEAD
 import IconSplitter from '../icons/IconSplitter.vue';
 import IconCombiner from '../icons/IconCombiner.vue';
+=======
+>>>>>>> 0c64510bf77c821058647e8c7dcb0a1ada4e9530
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
   // 在拖拽开始时，将节点类型信息存入dataTransfer对象
