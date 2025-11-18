@@ -223,9 +223,9 @@
   const isTesting = ref(false);
   
   const formattedTestResult = computed(() => {
-    if (!localConfig.value.testResult || !localConfig.value.sampleData) return '';
+    if (!localConfig.value.testResult || !localConfig.value.testResult.sampleData) return '';
     try {
-      return JSON.stringify(localConfig.value.sampleData, null, 2);
+      return JSON.stringify(localConfig.value.testResult.sampleData, null, 2);
     } catch {
       return '无法显示结果';
     }
@@ -328,15 +328,20 @@
               const fieldValue = cond.field.split('.').reduce((obj: any, key: string) => {
                 return obj ? obj[key] : undefined;
               }, item);
-  
+
+              // 尝试将值转换为数字（如果可能）
+              const isNumeric = (str: string) => !isNaN(Number(str)) && str.trim() !== '';
+              const numericFieldValue = isNumeric(String(fieldValue)) ? Number(fieldValue) : fieldValue;
+              const numericCondValue = isNumeric(cond.value) ? Number(cond.value) : cond.value;
+
               // 根据操作符判断条件
               switch (cond.operator) {
-                case 'eq': return fieldValue === cond.value;
-                case 'ne': return fieldValue !== cond.value;
-                case 'gt': return fieldValue > cond.value;
-                case 'lt': return fieldValue < cond.value;
-                case 'gte': return fieldValue >= cond.value;
-                case 'lte': return fieldValue <= cond.value;
+                case 'eq': return numericFieldValue === numericCondValue;
+                case 'ne': return numericFieldValue !== numericCondValue;
+                case 'gt': return numericFieldValue > numericCondValue;
+                case 'lt': return numericFieldValue < numericCondValue;
+                case 'gte': return numericFieldValue >= numericCondValue;
+                case 'lte': return numericFieldValue <= numericCondValue;
                 case 'includes': return fieldValue?.includes(cond.value) || false;
                 case 'notIncludes': return !(fieldValue?.includes(cond.value) || false);
                 case 'exists': return fieldValue !== undefined && fieldValue !== null;
@@ -518,14 +523,6 @@
   font-size: 13px;
   color: #4b5563; 
   font-weight: 500;
-}
-
-.condition-item {
-  margin-bottom: 10px;
-  padding: 10px;
-  background: #f9fafb;
-  border-radius: 4px;
-  border: 1px solid #e5e7eb;
 }
 
 .condition-item {

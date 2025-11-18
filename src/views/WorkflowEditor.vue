@@ -50,16 +50,14 @@
       </el-card>
       <el-main class="canvas-area" @dragover="onDragOver" @drop="onDrop">
         <VueFlow
-        :node="nodes"
+        :nodes="nodes"
         :edges="edges" 
         :node-types="nodeTypes" 
         fit-view-on-init
         class="vue-flow-container"
         @connect="handleConnect"
-        @nodes-change="onNodesChange"
-        @edges-change="onEdgesChange"
         >
-          <Background pattern-color="#aaa" gap="16" />
+          <Background pattern-color="#aaa" :gap="16" />
           <Controls />
         </VueFlow>
         <el-button type="warning" class="execute-btn">Execute workflow</el-button>
@@ -148,11 +146,96 @@ const onDrop = async (event:DragEvent) => {
     };
     const projectedPosition = project(position);
     
+    // 根据节点类型提供合适的初始数据结构
+    let initialData: any = {};
+    
+    switch (nodeType) {
+      case 'customScript':
+        initialData = {
+          title: '自定义脚本',
+          inputData: '{}',
+          code: '// 处理 inputData，返回结果\nreturn inputData;'
+        };
+        break;
+      case 'httpRequest':
+        initialData = {
+          title: 'HTTP请求',
+          method: 'GET',
+          url: '',
+          headers: [],
+          params: [],
+          body: '',
+          bodyType: 'json'
+        };
+        break;
+      case 'IfConditionConfig':
+        initialData = {
+          title: '条件判断',
+          condition: '',
+          trueBranch: [],
+          falseBranch: []
+        };
+        break;
+      case 'Webhook':
+        initialData = {
+          title: 'Webhook',
+          endpoint: '',
+          method: 'POST',
+          secret: ''
+        };
+        break;
+      case 'mysql':
+        initialData = {
+          title: 'MySQL查询',
+          connection: '',
+          query: 'SELECT * FROM table',
+          parameters: []
+        };
+        break;
+      case 'FilterNode':
+        initialData = {
+          title: '过滤器',
+          filterMode: 'keep',
+          conditionType: 'and',
+          conditions: [{
+            field: 'data.value',
+            operator: 'eq',
+            value: ''
+          }],
+          emptyDataBehavior: 'passEmpty'
+        };
+        break;
+      case 'postgresql':
+        initialData = {
+          title: 'PostgreSQL',
+          connection: '',
+          query: 'SELECT * FROM table',
+          parameters: []
+        };
+        break;
+      case 'splitter':
+        initialData = {
+          title: '拆分器',
+          splitBy: 'array',
+          field: ''
+        };
+        break;
+      case 'combiner':
+        initialData = {
+          title: '合并器',
+          combineBy: 'array',
+          fields: []
+        };
+        break;
+      default:
+        initialData = { label: `${nodeType} Node` };
+    }
+    
     const newNode = {
       id: `${nodeType}-${Date.now()}`, 
-      type: nodeType, 
+      type: nodeType,
       position: projectedPosition,
-      data: { label: `${nodeType} Node` } 
+      data: initialData
     };
     addNodes([newNode]);
     await nextTick();
