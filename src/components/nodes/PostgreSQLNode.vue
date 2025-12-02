@@ -195,7 +195,7 @@
 import { ref, computed, nextTick, onMounted } from "vue";
 import { Handle, Position, useVueFlow } from "@vue-flow/core";
 import { ElMessage } from "element-plus";
-import { postgresqlAPI, nodeAPI } from "@/api/database";
+import { postgresqlAPI, nodeAPI } from "@/api/interface";
 import IconPostgreSQL from "../icons/IconPostgreSQL.vue";
 
 interface PostgreSQLConfig {
@@ -213,6 +213,8 @@ interface PostgreSQLConfig {
   maxRows: number;
   sslMode: string;
   poolSize: number;
+  position?: { x: number; y: number };
+  fromBackend?: boolean;
   testResult?: {
     success: boolean;
     affectedRows?: number;

@@ -1,7 +1,7 @@
 
 import { createRouter, createWebHistory,} from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router'; //类型导入
-import Overview from '@/views/Overview.vue'; //当前页面Overview组件
+import Overview from '@/views/OverView.vue'; //当前页面Overview组件
 import WorkflowEditor from '@/views/WorkflowEditor.vue'; // 新页面的组件
 
 const routes: RouteRecordRaw[] = [
