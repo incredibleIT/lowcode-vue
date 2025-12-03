@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { getFlowList } from '@/api/flow';
+import { getFlowPage } from '@/api/flow';
 import { useRouter } from 'vue-router';
-import WorkflowEditor from '@/views/WorkflowEditor.vue';
-import component from 'element-plus/es/components/tree-select/src/tree-select-option.mjs';
 const activeName = ref('workflows');
 const currentPage = ref(1);
 const pageSize = ref(10);
@@ -12,7 +10,7 @@ const router = useRouter();
 
 const goToWorkflowEditor = () => {
     console.log('1111111')
-  router.push({ name: 'WorkflowEditor' });
+    router.push({ name: 'WorkflowEditor' });
 };
 // 当分页器页码发生改变时，动态加载对应页的工作流列表
 const handlePageChange = (page: number) => {
@@ -28,10 +26,9 @@ const loadCurrentPageInfo = async (page: number) => {
 }
 
 // 发送http请求获取当前页的工作流列表
-const getFlowByPage = (pagesize: number, page: number): Promise<any> => {
-    return getFlowList(pagesize, page).then(res => {
-        return res;
-    })
+const getFlowByPage = async (pagesize: number, page: number): Promise<any> => {
+    const res = await getFlowPage(page, pagesize);
+    return res;
 }
 
 // 当组件挂载时，加载第一页的工作流列表
