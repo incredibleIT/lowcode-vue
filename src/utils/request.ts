@@ -3,7 +3,7 @@ import type { InternalAxiosRequestConfig, AxiosResponse, AxiosError, AxiosReques
 
 const service = axios.create({
     // baseURL: import.meta.env.VITE_BASE_URL || '/api',  // 在环境中加载url
-    baseURL: 'http://127.0.0.1:8081/api',  // 在环境中加载url
+    baseURL: 'http://127.0.0.1:8080/api',  // 在环境中加载url
     timeout: 10000,  // 超时
 })
 
@@ -30,12 +30,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response: AxiosResponse) => {
         const {code, message, data} = response.data;
-        console.log('响应拦截器:', response);
-        // if (code == 200 || code == 0) {
-        //     return data;
-        // } else {
-        //     return Promise.reject('错误：' + message);
-        // }
+        // console.log('响应拦截器:', response);
         return response;
     },
     (error: AxiosError) => {
