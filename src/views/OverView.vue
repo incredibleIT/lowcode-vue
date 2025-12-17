@@ -2,6 +2,8 @@
 import {onMounted, ref} from 'vue';
 import {getFlowPage, getFlowList} from '@/api/flow';
 import {useRouter} from 'vue-router';
+import MainLayout from "@/layouts/MainLayout.vue";
+import LoadingWrapper from "@/layouts/LoadingWrapper.vue";
 
 const activeName = ref('workflows');
 const currentPage = ref(1);
@@ -11,25 +13,15 @@ const router = useRouter();
 
 // 工作流列表
 const workflows = ref([
-    // {
-    //     name: 'My workflow 2',
-    //     lastUpdated: '1 day ago',
-    //     createdAt: '30 September',
-    //     status: 'Inactive',
-    //     active: false
-    // },
-    // {
-    //     name: 'My workflow 3',
-    //     lastUpdated: '1 day ago',
-    //     createdAt: '30 September',
-    //     status: 'Inactive',
-    //     active: false
-    // }
 ])
 
+const load = ref(true)
+
 const loadFlowList = async () => {
+    load.value = true
     const result = await getFlowList();
     workflows.value = result.data.data
+    load.value = false
 }
 onMounted(loadFlowList)
 
@@ -66,29 +58,50 @@ onMounted(loadFlowList)
                       prefix-icon="Search"/>
         </div>
 
-        <!-- 流程列表 -->
-        <div class="workflow-list">
-            <el-card v-for="(item, index) in workflows" :key="index" class="workflow-card">
-                <div class="workflow">
-                    <div class="workflow-left">
-                        <div class="title">{{ item.name }}</div>
-                        <div class="subtitle">Last updated {{ item.lastUpdated }} | Created {{ item.createdAt }}</div>
-                    </div>
+        <LoadingWrapper :loading="load" :skeletonCount="5">
+            <div class="workflow-list">
+                <el-card v-for="(item, index) in workflows" :key="index" class="workflow-card">
+                    <div class="workflow">
+                        <div class="workflow-left">
+                            <div class="title">{{ item.name }}</div>
+                            <div class="subtitle">Last updated {{ item.lastUpdated }} | Created {{ item.createdAt }}</div>
+                        </div>
 
-                    <div class="workflow-right">
-                        <div class="status">
-                            <span>{{ item.status }}</span>
-                            <el-switch
-                                v-model="item.active"
-                                active-color="#13ce66"
-                                inactive-color="#999"
-                                size="small"/>
+                        <div class="workflow-right">
+                            <div class="status">
+                                <span>{{ item.status }}</span>
+                                <el-switch
+                                    v-model="item.active"
+                                    active-color="#13ce66"
+                                    inactive-color="#999"
+                                    size="small"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            </el-card>
-        </div>
+                </el-card>
+            </div>
+        </LoadingWrapper>
+        <el-skeleton
+            :loading="load"
+            animated
+        >
+            <template #template>
+                <el-card
+                    v-for="i in 5"
+                    :key="i"
+                    class="workflow-card"
+                >
+                    <el-skeleton-item variant="text" style="width: 40%"/>
+                    <el-skeleton-item variant="text" style="width: 60%; margin-top: 8px"/>
+                </el-card>
+            </template>
+
+            <template #default>
+
+
+            </template>
+        </el-skeleton>
 
         <!-- 分页器 -->
         <div class="page">
