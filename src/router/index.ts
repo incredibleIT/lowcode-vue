@@ -39,25 +39,13 @@ const routes = [
         name: 'Overview',
         component: () => import('@/views/Overview.vue')
       },
-      // {
-      //   path: 'workflows',
-      //   name: 'Workflows',
-      //   component: () => import('@/views/WorkflowList.vue')
-      // },
-      // {
-      //   path: 'credentials',
-      //   name: 'Credentials',
-      //   component: () => import('@/views/cre/CredentialList.vue')
-      // }
+      {
+        path: '/workflow-editor',
+        name: 'WorkflowEditor',
+        component: () => import('@/views/WorkflowEditor.vue')
+      }
     ]
   },
-
-  // 单独页面（不需要 Layout）
-  // {
-  //   path: '/workflow/editor',
-  //   name: 'WorkflowEditor',
-  //   component: () => import('@/views/WorkflowEditor.vue')
-  // }
 ]
 
 const router = createRouter({

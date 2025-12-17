@@ -16,6 +16,10 @@ const workflows = ref <Workflow[]> ([])
 
 const load = ref(true)
 
+const goToWorkflowEditor = () => {
+    router.push('/workflow-editor')
+}
+
 const loadFlowList = async () => {
     load.value = true
     const result = await getFlowList();
@@ -81,26 +85,6 @@ onMounted(loadFlowList)
                 </el-card>
             </div>
         </LoadingWrapper>
-        <el-skeleton
-            :loading="load"
-            animated
-        >
-            <template #template>
-                <el-card
-                    v-for="i in 5"
-                    :key="i"
-                    class="workflow-card"
-                >
-                    <el-skeleton-item variant="text" style="width: 40%"/>
-                    <el-skeleton-item variant="text" style="width: 60%; margin-top: 8px"/>
-                </el-card>
-            </template>
-
-            <template #default>
-
-
-            </template>
-        </el-skeleton>
 
         <!-- 分页器 -->
         <div class="page">

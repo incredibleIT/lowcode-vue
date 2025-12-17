@@ -28,26 +28,13 @@
           <p>选择画布上的节点以编辑属性</p>
         </div>
       </el-tab-pane>
-
-      <!-- AI助手标签页 (为未来预留) -->
-      <el-tab-pane name="ai-assistant">
-        <template #label>
-          <span class="tab-label">
-            <el-icon><MagicStick /></el-icon>
-            <span>AI助手</span>
-          </span>
-        </template>
-        <div class="ai-panel-placeholder">
-          <p>AI助手功能开发中...</p>
-        </div>
-      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Grid, Setting, MagicStick } from '@element-plus/icons-vue';
+import { Grid, Setting } from '@element-plus/icons-vue';
 import NodePalette from './NodePalette.vue'; // 导入节点库
 
 const activeTab = ref('nodes'); 
@@ -55,7 +42,7 @@ const activeTab = ref('nodes');
 
 <style scoped>
 .right-sidebar {
-  width: 280px;
+  width: 320px;
   height: 100%;
   background: #fff;
   border-left: 1px solid #e4e7ed;
@@ -85,8 +72,7 @@ const activeTab = ref('nodes');
   gap: 6px;
 }
 
-.property-panel-placeholder,
-.ai-panel-placeholder {
+.property-panel-placeholder {
   padding: 20px;
   text-align: center;
   color: #4f5053;

@@ -81,4 +81,10 @@ import AppLogo from '@/components/icons/AppLogo.vue'
     justify-content: space-between;
 }
 
+.main {
+    padding: 0;
+    margin: 0;
+
+}
+
 </style>
