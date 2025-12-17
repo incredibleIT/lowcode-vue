@@ -2,8 +2,8 @@
 import {onMounted, ref} from 'vue';
 import {getFlowPage, getFlowList} from '@/api/flow';
 import {useRouter} from 'vue-router';
-import MainLayout from "@/layouts/MainLayout.vue";
 import LoadingWrapper from "@/layouts/LoadingWrapper.vue";
+import type {Workflow} from "@/interface/workflow.ts";
 
 const activeName = ref('workflows');
 const currentPage = ref(1);
@@ -12,8 +12,7 @@ const total = ref(0);
 const router = useRouter();
 
 // 工作流列表
-const workflows = ref([
-])
+const workflows = ref <Workflow[]> ([])
 
 const load = ref(true)
 
@@ -64,7 +63,7 @@ onMounted(loadFlowList)
                     <div class="workflow">
                         <div class="workflow-left">
                             <div class="title">{{ item.name }}</div>
-                            <div class="subtitle">Last updated {{ item.lastUpdated }} | Created {{ item.createdAt }}</div>
+                            <div class="subtitle">Last updated {{ item.updatedAt }} | Created {{ item.createdAt }}</div>
                         </div>
 
                         <div class="workflow-right">
