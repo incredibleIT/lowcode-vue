@@ -24,12 +24,21 @@ import PostgreSQLNode from "@/components/nodes/PostgreSQLNode.vue";
 import SplitterNode from "@/components/nodes/SplitterNode.vue";
 import CombinerNode from "@/components/nodes/CombinerNode.vue";
 
+import {onMounted} from "vue";
+import {useWebSocket} from "@/composables/useWebSocket.ts";
+import { getNodeTypeList } from "@/api/nodeType.ts";
 // const nodes = ref<Node[]>([])
 // const edges = ref<Edge[]>([])
+const WS_URL = "ws://localhost:8080/node-status";
+const { messages, connect, send, closeWs } = useWebSocket(WS_URL, (msg) => console.log(msg))
+console.log(connect)
+onMounted(() => connect())
+
+
 
 const nodeTypes: NodeTypesObject = {
-    customScript: markRaw(CustomScriptNode) as NodeComponent,
-    httpRequest: markRaw(HttpRequests) as NodeComponent,
+    approval: markRaw(CustomScriptNode) as NodeComponent,
+    stop: markRaw(HttpRequests) as NodeComponent,
     IfConditionConfig: markRaw(IfConditionConfig) as NodeComponent,
     Webhook: markRaw(Webhook) as NodeComponent,
     mysql: markRaw(MySQLNode) as NodeComponent,
@@ -67,6 +76,7 @@ const onDragOver = (event: DragEvent) => {
 const onDrop = async (event: DragEvent) => {
     event.preventDefault();
     const nodeType = event.dataTransfer?.getData('application/vueflow-node-type');
+    console.log(nodeType)
     if (nodeType && nodeTypes[nodeType as keyof typeof nodeTypes]) {
         // 计算鼠标在画布上的位置
         const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
@@ -80,7 +90,7 @@ const onDrop = async (event: DragEvent) => {
         let initialData: any = {};
 
         switch (nodeType) {
-            case 'customScript':
+            case "approval":
                 initialData = {
                     title: '自定义脚本',
                     inputData: '{}',

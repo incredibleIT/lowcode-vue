@@ -1,69 +1,34 @@
+<!-- 所有节点的图标统一放置在 src/components/icons/ 目录下, 文件名 = Icon{PascalCase}.vue-->
+
+
+
 <template>
   <div class="node-palette">
     <h3>节点库</h3>
     <el-divider />
+      <div v-for="(group, category) in groupedNodeTypes" :key="category" class="node-group">
+          <h4>{{ category }}</h4>
+          <div
+              v-for="nt in group"
+              :key="nt.typeKey"
+              class="node-item"
+              draggable="true"
+              @dragstart="onDragStart($event, nt.typeKey)"
+          >
+              <component
+                  :is="getIconComponent(nt.icon || nt.typeKey)"
+                  class="node-icon">
 
-    <!-- 写了一个放置节点的节点库的右边栏 节点可以写在components的nodes目录下 -->
-    <!-- 放了一个自定义脚本节点，没写其他节点 -->
-    <div class="node-group">
-      <h4>脚本节点</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'customScript')">
-        <IconCustomScript class="node-icon"/>
-        <span class="node-label">自定义脚本</span>
-      </div>
+              </component>
 
-
-      <h4>http请求</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'httpRequest')">
-        <IconHttpRequest class="node-icon"/>
-        <span>http请求</span>
+              <span>{{ nt.name }}</span>
+          </div>
       </div>
-
-      <h4>条件if节点</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'IfConditionConfig')">
-        <IconConditions class="node-icon"/>
-        <span>条件if节点</span>
-      </div>
-      <h4>Webhook节点</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'Webhook')">
-        <IconWebhook class="node-icon"/>
-        <span>Webhook节点</span>
-      </div>
-      <h4>Filter节点</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'FilterNode')">
-        <IconFilter class="node-icon"/>
-        <span>Filter节点</span>
-      </div>
-      
-      <h4>数据处理</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'splitter')">
-        <IconSplitter class="node-icon"/>
-        <span>拆分器</span>
-      </div>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'combiner')">
-        <IconCombiner class="node-icon"/>
-        <span>合并器</span>
-      </div>
-    </div>
-
-    <el-divider />
-
-    <div class="node-group">
-      <h4>数据库操作</h4>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'postgresql')">
-        <IconPostgreSQL class="node-icon"/>
-        <span>PostgreSQL</span>
-      </div>
-      <div class="node-item" draggable="true" @dragstart="onDragStart($event, 'mysql')">
-        <IconMySQL class="node-icon"/>
-        <span>MySQL查询</span>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Document, Postcard } from '@element-plus/icons-vue';
+import { getNodeTypeList } from "@/api/nodeType.ts";
 import IconCustomScript from '../icons/IconCustomScript.vue';
 import IconHttpRequest from '../icons/IconHttpRequest.vue';
 import IconConditions from '../icons/IconConditions.vue';
@@ -73,6 +38,26 @@ import IconPostgreSQL from '../icons/IconPostgreSQL.vue';
 import IconFilter from '../icons/IconFilter.vue';
 import IconSplitter from '../icons/IconSplitter.vue';
 import IconCombiner from '../icons/IconCombiner.vue';
+import type {NodeComponent, NodeTypesObject} from "@vue-flow/core";
+import {computed, defineComponent, markRaw, onMounted, ref} from "vue";
+import CustomScriptNode from "@/components/nodes/CustomScriptNodes.vue";
+import HttpRequests from "@/components/nodes/HttpRequests.vue";
+import type {NodeType} from "@/interface/node-type.ts";
+
+// 图标映射
+const iconMap: Record<string, any> = {
+    "user-check": IconCustomScript,
+    stop: IconHttpRequest,
+    ifCondition: IconConditions,
+    default: IconWebhook,
+    filter: IconFilter,
+    splitter: IconSplitter,
+    combiner: IconCombiner,
+    database: IconMySQL,
+    play: IconPostgreSQL,
+}
+
+
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
   // 在拖拽开始时，将节点类型信息存入dataTransfer对象
@@ -81,6 +66,40 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
     event.dataTransfer.effectAllowed = 'move';
   }
 };
+
+
+
+const nodeTypes = ref <NodeType[]>( [] );
+const loading = ref(false)
+
+
+const loadNodeTypes = async () => {
+    try {
+        nodeTypes.value = await getNodeTypeList();
+        console.log(nodeTypes.value);
+    } catch (err) {
+        console.error('Failed to load node types:', err);
+    }
+}
+
+onMounted(() => {
+    loadNodeTypes();
+});
+
+
+const groupedNodeTypes = computed(() => {
+    const groups : Record<string, NodeType[]> = {};
+    nodeTypes.value.forEach(nt => {
+        const cat = nt.category || "其他";
+        if (!groups[cat]) groups[cat] = [];
+        groups[cat].push(nt);
+    });
+   return groups;
+});
+
+const getIconComponent = (key: string) => {
+    return iconMap[key]
+}
 </script>
 
 <style scoped>
@@ -122,20 +141,6 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
   width: 20px;
   height: 20px;
 }
- /* .node-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 8px;
-  border: 1px solid #dcdfe6;
-  border-radius: 8px;
-  cursor: grab;
-  background-color: #f5f7fa;
-  transition: all 0.2s ease;
-  text-align: center;
-  min-height: 80px;
-  justify-content: center;
-} */
 
 .node-item:hover {
   border-color: #409eff;
@@ -158,13 +163,6 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
 .node-item span {
   font-size: 13px;
   color: #606266;
-}
-
-/* 网格布局用于排列图标节点[1](@ref) */
-.nodes-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
 }
 </style>
 

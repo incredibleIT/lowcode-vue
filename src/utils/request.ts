@@ -30,8 +30,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     (response: AxiosResponse) => {
         const {code, message, data} = response.data;
-        // console.log('响应拦截器:', response);
-        return response;
+        return data;
     },
     (error: AxiosError) => {
         // 响应拦截器发生错误时做的事情
