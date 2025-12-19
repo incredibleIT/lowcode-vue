@@ -39,20 +39,6 @@ import CustomScriptNode from "@/components/nodes/CustomScriptNodes.vue";
 import HttpRequests from "@/components/nodes/HttpRequests.vue";
 import type {NodeType} from "@/interface/node-type.ts";
 import {loadNodeIcon} from "@/utils/iconLoader.ts";
-
-// 图标映射
-const iconMap: Record<string, any> = {
-    "user-check": IconCustomScript,
-    stop: IconHttpRequest,
-    ifCondition: IconConditions,
-    default: IconWebhook,
-    filter: IconFilter,
-    splitter: IconSplitter,
-    combiner: IconCombiner,
-    database: IconMySQL,
-    play: IconPostgreSQL,
-}
-
 const iconComponents = ref< Record<string, any> >({})
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
@@ -74,7 +60,7 @@ const loadNodeTypes = async () => {
     }
 }
 
-
+// 加载所有所需的图标
 const loadAllIcons = async () => {
     const iconsToLoad = new Set<string>();
     nodeTypes.value.forEach(nt => {
@@ -95,7 +81,7 @@ onMounted(async () => {
     await loadAllIcons();
 });
 
-
+// 分组
 const groupedNodeTypes = computed(() => {
     const groups : Record<string, NodeType[]> = {};
     nodeTypes.value.forEach(nt => {
