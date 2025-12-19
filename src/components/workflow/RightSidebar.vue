@@ -42,12 +42,13 @@ const activeTab = ref('nodes');
 
 <style scoped>
 .right-sidebar {
-  width: 320px;
+  width: 20%;
   height: 100%;
   background: #fff;
   border-left: 1px solid #e4e7ed;
   display: flex;
   flex-direction: column;
+  float: right;
 }
 
 .sidebar-tabs {
