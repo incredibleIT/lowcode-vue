@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {getFlowPage, getFlowList} from '@/api/flow';
+import {getFlowList} from '@/api/flow';
 import {useRouter} from 'vue-router';
 import LoadingWrapper from "@/layouts/LoadingWrapper.vue";
 import type {Workflow} from "@/interface/workflow.ts";
@@ -22,8 +22,7 @@ const goToWorkflowEditor = () => {
 
 const loadFlowList = async () => {
     load.value = true
-    const result = await getFlowList();
-    workflows.value = result.data.data
+    workflows.value = await getFlowList()
     load.value = false
 }
 onMounted(loadFlowList)
