@@ -1,7 +1,4 @@
 <!-- 所有节点的图标统一放置在 src/components/icons/ 目录下, 文件名 = Icon{PascalCase}.vue-->
-
-
-
 <template>
   <div class="node-palette">
     <h3>节点库</h3>
@@ -16,10 +13,8 @@
               @dragstart="onDragStart($event, nt.typeKey)"
           >
               <component
-                  :is="getIconComponent(nt.icon || nt.typeKey)"
-                  class="node-icon">
-
-              </component>
+                  :is="iconComponents[nt.icon]"
+                  class="node-icon" />
 
               <span>{{ nt.name }}</span>
           </div>
@@ -43,6 +38,7 @@ import {computed, defineComponent, markRaw, onMounted, ref} from "vue";
 import CustomScriptNode from "@/components/nodes/CustomScriptNodes.vue";
 import HttpRequests from "@/components/nodes/HttpRequests.vue";
 import type {NodeType} from "@/interface/node-type.ts";
+import {loadNodeIcon} from "@/utils/iconLoader.ts";
 
 // 图标映射
 const iconMap: Record<string, any> = {
@@ -57,7 +53,7 @@ const iconMap: Record<string, any> = {
     play: IconPostgreSQL,
 }
 
-
+const iconComponents = ref< Record<string, any> >({})
 // 拖拽处理函数，跟WorkflowEditor的onDragOver 和 onDrop 呼应
 const onDragStart = (event: DragEvent, nodeType: string) => {
   // 在拖拽开始时，将节点类型信息存入dataTransfer对象
@@ -66,13 +62,9 @@ const onDragStart = (event: DragEvent, nodeType: string) => {
     event.dataTransfer.effectAllowed = 'move';
   }
 };
-
-
-
 const nodeTypes = ref <NodeType[]>( [] );
-const loading = ref(false)
 
-
+// 请求所有的节点类型数据
 const loadNodeTypes = async () => {
     try {
         nodeTypes.value = await getNodeTypeList();
@@ -82,8 +74,25 @@ const loadNodeTypes = async () => {
     }
 }
 
-onMounted(() => {
-    loadNodeTypes();
+
+const loadAllIcons = async () => {
+    const iconsToLoad = new Set<string>();
+    nodeTypes.value.forEach(nt => {
+        iconsToLoad.add(<string> nt.icon);
+    })
+
+    await Promise.all(
+        Array.from(iconsToLoad).map(async k => {
+            iconComponents.value[k] = await loadNodeIcon(k);
+            console.log(k + ":" + iconComponents.value[k])
+        })
+    );
+}
+
+
+onMounted(async () => {
+    await loadNodeTypes();
+    await loadAllIcons();
 });
 
 
@@ -96,10 +105,6 @@ const groupedNodeTypes = computed(() => {
     });
    return groups;
 });
-
-const getIconComponent = (key: string) => {
-    return iconMap[key]
-}
 </script>
 
 <style scoped>
